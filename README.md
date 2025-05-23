@@ -28,13 +28,13 @@ A Tkinter-based puzzle game based on Euler's Knight Problem, where the objective
 3. Create and activate a virtual environment:
    - On macOS/Linux:
      ```bash
-     python -m venv venv
-     source venv/bin/activate
+     python -m venv .venv
+     source .venv/bin/activate
      ```
    - On Windows:
      ```cmd
-     python -m venv venv
-     venv\Scripts\activate
+     python -m venv .venv
+     .venv\Scripts\activate
      ```
 4. Install the dependencies:
    ```bash
