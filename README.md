@@ -19,11 +19,11 @@ A Tkinter-based puzzle game based on Euler's Knight Problem, where the objective
 
 ## 🛠 Installation
 
-1. Make sure Python 3.11.9 (or compatible) is installed on your system.
+1. Make sure Python 3.11.9 (or compatible) is installed on your system with Tkinter.
 2. Clone the repository:
    ```bash
-   git clone https://github.com/ElliotKoch/Knight-Tour-Problem.git)
-   cd Knight-Tour-Problem-main
+   git clone https://github.com/ElliotKoch/Knight-Tour-Problem.git
+   cd Knight-Tour-Problem
    ```
 3. Create and activate a virtual environment:
    - On macOS/Linux:
