@@ -48,6 +48,7 @@ A Tkinter-based puzzle game based on Euler's Knight Problem, where the objective
 ## 📁 Assets
 
 - Include a knight image at `./images/black-chess-knight.png`.
+- Include the pictures for the solutions of all the grids.
 
 ## ✅ TODO (optional)
 
