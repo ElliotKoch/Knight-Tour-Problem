@@ -143,7 +143,7 @@ class KnightGame:
             "❌ How to Lose:\n"
             "- If the knight has no valid moves left **before visiting all cells**.\n\n"
             "🟢 Easy Mode:\n"
-            "- Possible moves are **highlighted in green**.\n\n"
+            "- Possible moves are **highlighted in blue**.\n\n"
             "⚫ Expert Mode:\n"
             "- No possible moves are shown. Think before each step!"
         )
