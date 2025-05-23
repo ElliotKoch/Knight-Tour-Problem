@@ -1,4 +1,4 @@
-# ♞ Knight's Problem Game
+   # ♞ Knight's Problem Game
 
 A Tkinter-based puzzle game based on Euler's Knight Problem, where the objective is to visit every square on the board exactly once using a knight's move.
 
@@ -22,7 +22,7 @@ A Tkinter-based puzzle game based on Euler's Knight Problem, where the objective
 1. Make sure Python 3.11.9 (or compatible) is installed on your system.
 2. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Knight-Tour-Problem.git
+   git clone https://github.com/ElliotKoch/Knight-Tour-Problem.git)
    cd Knight-Tour-Problem-main
    ```
 3. Create and activate a virtual environment:
