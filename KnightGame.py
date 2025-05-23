@@ -180,27 +180,30 @@ class KnightGame:
         self.knight_label = tk.Label(self.master, image=self.knight_img, borderwidth=0)
 
         # Create grid cells (labels), bind click to place knight
+        cell_size_px = 50
         self.cells = []
         for row in range(self.grid_size):
+            self.grid_frame.grid_rowconfigure(row, minsize=cell_size_px)
             row_cells = []
             for col in range(self.grid_size):
+                self.grid_frame.grid_columnconfigure(col, minsize=cell_size_px)
                 cell = tk.Label(
                     self.grid_frame,
                     text="",
-                    width=6,
-                    height=3,
                     borderwidth=1,
-                    relief="solid"
+                    relief="solid",
+                    bg="light gray",
+                    font=("Arial", 10)
                 )
-                cell.grid(row=row, column=col)
+                cell.grid(row=row, column=col, sticky="nsew")  # Expand to fill 50px cell
                 cell.bind("<Button-1>", self.make_place_knight_handler(row, col))
                 row_cells.append(cell)
             self.cells.append(row_cells)
-
         # Set fixed size for grid frame and pack it
         self.grid_frame.config(width=self.grid_size * 50, height=self.grid_size * 50)
         self.grid_frame.pack_propagate(False)
         self.grid_frame.pack(pady=20)
+        
 
         # Show the turn label under the grid
         self.turn_label.config(text="Turn 0", font=("Arial", 14, "bold"), fg="black")
@@ -227,9 +230,9 @@ class KnightGame:
 
         # Create and place a small "RULES" button above the grid for quick access
         self.small_rules_button = tk.Button(self.master, text="RULES", font=("Arial", 10, "bold"), width=10, command=self.show_rules)
-        button_width_px = 80
+        button_width_px = 105
         button_x = (window_width - button_width_px) // 2
-        self.small_rules_button.place(x=button_x, y=self.grid_frame.winfo_y() - 30)
+        self.small_rules_button.place(x=button_x, y=self.grid_frame.winfo_y() - 35)
 
         self.knight_placed = False
 
@@ -271,7 +274,7 @@ class KnightGame:
                 if (r, c) in self.visited_cells:
                     self.cells[r][c].config(bg="#FF0000")  # red = visited
                 else:
-                    self.cells[r][c].config(bg="SystemButtonFace")  # default
+                    self.cells[r][c].config(bg="light gray")  # default
 
         # Highlight knight's current cell red too
         self.cells[row][col].config(bg="#FF0000")
@@ -279,6 +282,9 @@ class KnightGame:
         # Show turn number inside knight's cell if Easy mode
         if self.mode == "Easy":
             self.cells[row][col].config(text=str(self.turn), font=("Arial", 9, "bold"), fg="black")
+        
+        # Ensure geometry is fully computed before placing the knight image
+        self.master.update_idletasks()
 
         # Place knight image centered in the current cell
         cell = self.cells[row][col]
