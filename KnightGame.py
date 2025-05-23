@@ -316,7 +316,7 @@ class KnightGame:
         if not self.valid_moves:
             # Stop the timer as game ended
             self.timer_running = False
-
+ 
             if visited_count == total_cells:
                 # Player visited all cells, they win
                 self.turn_label.config(text="YOU WIN", font=("Arial", 14, "bold"), fg="green")
