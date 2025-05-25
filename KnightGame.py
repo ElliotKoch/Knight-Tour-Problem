@@ -221,8 +221,6 @@ class KnightGame:
        # Adjust window size to fit the grid nicely
         window_width = self.grid_size * 50 + 150  # Add some padding for buttons
         window_height = self.grid_size * 50 + 220  # 50px per cell + space for buttons
-        print(f"Setting window size to {window_width}x{window_height}")
-
         self.master.geometry(f"{window_width}x{window_height}")
         self.master.resizable(False, False)  # Lock window size
 
