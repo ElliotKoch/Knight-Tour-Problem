@@ -1,10 +1,17 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+import pygame 
 
 class KnightGame:
     def __init__(self, master):
         self.master = master
         self.master.title("Knight's Problem Game")
+
+        # Initialize pygame mixer
+        pygame.mixer.init()
+        # Load the moving sound for knight moves
+        self.move_sound = pygame.mixer.Sound('./sounds/knight.wav')
+        self.sound_on = True
 
         # Default game settings
         self.mode = "Easy"          # Game mode: Easy or Expert
@@ -33,6 +40,17 @@ class KnightGame:
 
         self.rules_button = tk.Button(master, text="RULES", font=("Arial", 16), command=self.show_rules)
         self.rules_button.pack(pady=10)
+
+        # Sound toggle button
+        self.sound_button = tk.Button(
+            self.master,
+            text="🔊",  # Default: sound ON
+            font=("Arial", 16),
+            command=self.toggle_sound,
+            bd=0,
+            relief="flat"
+        )
+        self.sound_button.place(x=5, y=5)
 
         # Frame to hold the game grid (the board)
         self.grid_frame = tk.Frame(master)
@@ -66,6 +84,10 @@ class KnightGame:
         # Switch between Easy and Expert mode, update button label accordingly
         self.mode = "Expert" if self.mode == "Easy" else "Easy"
         self.mode_button.config(text=f"MODE: {self.mode}")
+
+    def toggle_sound(self):
+        self.sound_on = not self.sound_on
+        self.sound_button.config(text="🔊" if self.sound_on else "🔇")
 
     def toggle_grid(self):
         # Change grid size from 5 to 8, then cycle back to 5
@@ -224,15 +246,15 @@ class KnightGame:
 
         # Adjust window size to fit the grid nicely
         grid_width = self.grid_frame.winfo_width()
-        window_width = grid_width + 50
-        window_height = self.grid_size * 50 + 200
+        window_width = grid_width + 70 # Add some padding for buttons
+        window_height = self.grid_size * 50 + 200 # 50px per cell + space for buttons
         self.master.geometry(f"{window_width}x{window_height}")
 
         # Create and place a small "RULES" button above the grid for quick access
-        self.small_rules_button = tk.Button(self.master, text="RULES", font=("Arial", 10, "bold"), width=10, command=self.show_rules)
+        self.small_rules_button = tk.Button(self.master, text="Rules",font=("arial",10), command=self.show_rules)
         button_width_px = 105
         button_x = (window_width - button_width_px) // 2
-        self.small_rules_button.place(x=button_x, y=self.grid_frame.winfo_y() - 35)
+        self.small_rules_button.place(relx=0.5, y=self.grid_frame.winfo_y() - 35, anchor="n")
 
         self.knight_placed = False
 
@@ -286,15 +308,17 @@ class KnightGame:
         # Ensure geometry is fully computed before placing the knight image
         self.master.update_idletasks()
 
+        # Remove knight image from previous position if not the first move
+        if self.knight_placed and self.turn > 1:
+            prev_row, prev_col = self.visited_cells[-1]
+            self.cells[prev_row][prev_col].config(image="", compound="center")  # Remove image
+            
         # Place knight image centered in the current cell
-        cell = self.cells[row][col]
-        cell_x = cell.winfo_x()
-        cell_y = cell.winfo_y()
-        cell_width = cell.winfo_width()
-        cell_height = cell.winfo_height()
-        x = self.grid_frame.winfo_x() + cell_x + (cell_width // 2) - (40 // 2)
-        y = self.grid_frame.winfo_y() + cell_y + (cell_height // 2) - (40 // 2)
-        self.knight_label.place(x=x, y=y)
+        self.cells[row][col].config(image=self.knight_img, compound="center")
+
+        # Play knight move sound
+        if self.sound_on:
+            self.move_sound.play()
 
         # Calculate valid moves for next step
         self.valid_moves = self.get_knight_moves(row, col)
