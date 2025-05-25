@@ -11,6 +11,8 @@ class KnightGame:
         pygame.mixer.init()
         # Load the moving sound for knight moves
         self.move_sound = pygame.mixer.Sound('./sounds/knight.wav')
+        self.win_sound = pygame.mixer.Sound('./sounds/win.wav')
+        self.lose_sound = pygame.mixer.Sound('./sounds/lose.wav')
         self.sound_on = True
 
         # Default game settings
@@ -154,11 +156,11 @@ class KnightGame:
             "  • One square perpendicular to that.\n"
             "- The knight jumps over other cells.\n\n"
             "🏁 How to Win:\n"
-            "- Successfully move the knight to cover all cells **exactly once**.\n\n"
+            "- Successfully move the knight to cover all cells exactly once.\n\n"
             "❌ How to Lose:\n"
-            "- If the knight has no valid moves left **before visiting all cells**.\n\n"
+            "- If the knight has no valid moves left before visiting all cells.\n\n"
             "🟢 Easy Mode:\n"
-            "- Possible moves are **highlighted in blue**.\n\n"
+            "- Possible moves are highlighted in blue.\n\n"
             "⚫ Expert Mode:\n"
             "- No possible moves are shown. Think before each step!"
         )
@@ -346,13 +348,19 @@ class KnightGame:
         if not self.valid_moves:
             # Stop the timer as game ended
             self.timer_running = False
+            
  
             if visited_count == total_cells:
                 # Player visited all cells, they win
                 self.turn_label.config(text="YOU WIN", font=("Arial", 14, "bold"), fg="green")
+                # Play knight move sound
+                if self.sound_on:
+                    self.win_sound.play()
             else:
                 # No moves left but not all cells visited, game over
                 self.turn_label.config(text="GAME OVER", font=("Arial", 14, "bold"), fg="red")
+                if self.sound_on:
+                    self.lose_sound.play()
         else:
             # Normal turn display during the game
             self.turn_label.config(text=f"Turn {self.turn}", font=("Arial", 14, "bold"), fg="black")
