@@ -57,9 +57,6 @@ class KnightGame:
         self.master.geometry("400x350")  # Initial window size
         self.grid_frame.pack(pady=20)
 
-        # Label to show messages (not used currently)
-        self.message_label = tk.Label(master, text="", font=("Arial", 14))
-
         # Bottom frame holds exit button and timer display
         self.bottom_frame = tk.Frame(master)
         self.exit_button = tk.Button(self.bottom_frame, text="EXIT", font=("Arial", 16), command=self.show_menu)
@@ -108,7 +105,6 @@ class KnightGame:
         self.grid_frame.pack_forget()
         self.exit_button.pack_forget()
         self.bottom_frame.pack_forget()
-        self.message_label.pack_forget()
         self.turn_label.pack_forget()
 
         # Remove small rules button if it exists
@@ -221,6 +217,7 @@ class KnightGame:
                 cell.bind("<Button-1>", self.make_place_knight_handler(row, col))
                 row_cells.append(cell)
             self.cells.append(row_cells)
+
         # Set fixed size for grid frame and pack it
         self.grid_frame.config(width=self.grid_size * 50, height=self.grid_size * 50)
         self.grid_frame.pack_propagate(False)
@@ -228,15 +225,12 @@ class KnightGame:
         
 
         # Show the turn label under the grid
-        self.turn_label.config(text="Turn 0", font=("Arial", 14, "bold"), fg="black")
         self.turn_label.pack(pady=(0, 5))
-
-        self.message_label.pack_forget()
 
         # Pack exit button and timer label in the bottom frame
         self.exit_button.pack(side="left", padx=10)
         self.timer_label.pack(side="left", padx=10)
-        self.bottom_frame.pack(pady=10)
+        self.bottom_frame.pack(fill="x", pady=10)
 
         # Remove old small rules button if present
         if self.small_rules_button and self.small_rules_button.winfo_exists():
