@@ -44,16 +44,28 @@ A Tkinter-based puzzle game based on Euler's Knight Problem, where the objective
    ```bash
    python main.py
    ```
-
 ## 📁 Assets
 
-- Include a knight image at `./images/black-chess-knight.png`.
-- Include the pictures for the solutions of all the grids at `./solutions`.
+### 🖼️ Images
+- **Knight Image**:  
+  Included at `./images/black-chess-knight.png`  
+  [Source – Black Chess Figure (Freepik)](https://www.freepik.com/free-vector/black-chess-figure-flat-style-vector-illustration_178790994.htm#fromView=keyword&page=1&position=1&uuid=1b6ad7fc-517e-4e2f-89ae-54c09fb3c53e&query=Chess+Knight)
 
-## ✅ TODO (optional)
+- **Solution Images**:  
+  Pictures for the solutions of all grids are included in the `./solutions` directory.
 
-- Add sound effects.
-- Save and load progress.
+### 🎵 Sounds
+- **Knight Move**:  
+  [mh2o – Freesound](https://freesound.org/people/mh2o/sounds/351518/)
+  
+- **Lose Sound**:  
+  [Unlistenable – Freesound](https://freesound.org/people/Unlistenable/sounds/391536/)
+  
+- **Win Sound**:  
+  [LittleRobotSoundFactory – Freesound](https://freesound.org/people/LittleRobotSoundFactory/sounds/274177/)
+
+## ✅ TODO
+
 - Scoreboard with best times.
 
 ## 👤 Author
