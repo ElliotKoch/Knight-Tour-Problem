@@ -58,7 +58,7 @@ class KnightGame:
         self.master.resizable(False, False)  # Lock window size
 
         # Bottom frame holds exit button and timer display
-        self.bottom_frame = tk.Frame(master, height=60)
+        self.bottom_frame = tk.Frame(master, height=65)
         self.exit_button = tk.Button(self.bottom_frame, text="← Menu", font=("arial",10), command=self.show_menu)
         self.timer_label = tk.Label(self.bottom_frame, text="", font=("Arial", 14))
 
@@ -219,18 +219,23 @@ class KnightGame:
         self.grid_frame.config(width=self.grid_size * 50, height=self.grid_size * 50)
 
        # Adjust window size to fit the grid nicely
-        window_width = self.grid_size * 50 + 70  # Add some padding for buttons
-        window_height = self.grid_size * 50 + 210  # 50px per cell + space for buttons
+        window_width = self.grid_size * 50 + 150  # Add some padding for buttons
+        window_height = self.grid_size * 50 + 220  # 50px per cell + space for buttons
         print(f"Setting window size to {window_width}x{window_height}")
 
         self.master.geometry(f"{window_width}x{window_height}")
         self.master.resizable(False, False)  # Lock window size
 
         self.master.update_idletasks()  # <-- Update geometry before placing the grid
+        
+        # Calculate top-left coordinates to center the grid_frame without using anchor
+        grid_width = self.grid_size * 50
+        grid_height = self.grid_size * 50
+        grid_x = (window_width - grid_width) // 2
+        grid_y = int(window_height * 0.52) - (grid_height // 2)
 
-
-        # Then place the grid_frame
-        self.grid_frame.place(x=window_width * 0.5, y=window_height * 0.52, anchor="center")
+        # Then place the grid_frame at the calculated position
+        self.grid_frame.place(x=grid_x, y=grid_y)
 
         # Place the bottom_frame manually at the bottom
         self.bottom_frame.place(relx=0.5, rely=0.95, anchor="s", relwidth=1.0)  # anchored at bottom center with some padding
