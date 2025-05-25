@@ -228,9 +228,10 @@ class KnightGame:
 
         self.master.update_idletasks()  # <-- Update geometry before placing the grid
 
+
         # Then place the grid_frame
-        self.grid_frame.place(relx=0.5, rely=0.52, anchor="center")
-        
+        self.grid_frame.place(x=window_width * 0.5, y=window_height * 0.52, anchor="center")
+
         # Place the bottom_frame manually at the bottom
         self.bottom_frame.place(relx=0.5, rely=0.95, anchor="s", relwidth=1.0)  # anchored at bottom center with some padding
 
