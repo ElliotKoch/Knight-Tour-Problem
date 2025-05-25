@@ -55,11 +55,11 @@ class KnightGame:
         # Frame to hold the game grid (the board)
         self.grid_frame = tk.Frame(master)
         self.master.geometry("400x350")  # Initial window size
-        self.grid_frame.pack(pady=20)
+        self.master.resizable(False, False)  # Lock window size
 
         # Bottom frame holds exit button and timer display
-        self.bottom_frame = tk.Frame(master)
-        self.exit_button = tk.Button(self.bottom_frame, text="EXIT", font=("Arial", 16), command=self.show_menu)
+        self.bottom_frame = tk.Frame(master, height=60)
+        self.exit_button = tk.Button(self.bottom_frame, text="← Menu", font=("arial",10), command=self.show_menu)
         self.timer_label = tk.Label(self.bottom_frame, text="", font=("Arial", 14))
 
         # Timer control variables
@@ -75,7 +75,7 @@ class KnightGame:
         self.visited_cells = []         # Cells already visited by the knight
 
         self.turn = 0                   # Keep track of the number of moves made
-        self.turn_label = tk.Label(master, text="Turn 0", font=("Arial", 14, "bold"), fg="black")
+        self.turn_label = tk.Label(self.bottom_frame, text="Turn 0", font=("Arial", 14, "bold"), fg="black")
 
     def toggle_mode(self):
         # Switch between Easy and Expert mode, update button label accordingly
@@ -101,11 +101,8 @@ class KnightGame:
     def show_menu(self):
         # Show the main menu buttons and reset game interface
         self.timer_running = False     # Stop timer if running
-        self.timer_label.pack_forget()
-        self.grid_frame.pack_forget()
-        self.exit_button.pack_forget()
-        self.bottom_frame.pack_forget()
-        self.turn_label.pack_forget()
+        self.grid_frame.place_forget()
+        self.bottom_frame.place_forget()
 
         # Remove small rules button if it exists
         if self.small_rules_button and self.small_rules_button.winfo_exists():
@@ -220,35 +217,40 @@ class KnightGame:
 
         # Set fixed size for grid frame and pack it
         self.grid_frame.config(width=self.grid_size * 50, height=self.grid_size * 50)
-        self.grid_frame.pack_propagate(False)
-        self.grid_frame.pack(pady=20)
+
+       # Adjust window size to fit the grid nicely
+        window_width = self.grid_size * 50 + 70  # Add some padding for buttons
+        window_height = self.grid_size * 50 + 210  # 50px per cell + space for buttons
+        print(f"Setting window size to {window_width}x{window_height}")
+
+        self.master.geometry(f"{window_width}x{window_height}")
+        self.master.resizable(False, False)  # Lock window size
+
+        self.master.update_idletasks()  # <-- Update geometry before placing the grid
+
+        # Then place the grid_frame
+        self.grid_frame.place(relx=0.5, rely=0.52, anchor="center")
         
+        # Place the bottom_frame manually at the bottom
+        self.bottom_frame.place(relx=0.5, rely=0.95, anchor="s", relwidth=1.0)  # anchored at bottom center with some padding
 
-        # Show the turn label under the grid
-        self.turn_label.pack(pady=(0, 5))
+        # Place the EXIT button inside bottom_frame to the left
+        self.exit_button.place(relx=0.35, y=30, anchor="n")
 
-        # Pack exit button and timer label in the bottom frame
-        self.exit_button.pack(side="left", padx=10)
-        self.timer_label.pack(side="left", padx=10)
-        self.bottom_frame.pack(fill="x", pady=10)
+        # Place the turn label inside bottom_frame at center top
+        self.turn_label.place(relx=0.5, y=0, anchor="n")
+        self.turn_label.config(text="Turn 0", font=("Arial", 14, "bold"), fg="black")
+
+        # Place the timer label inside bottom_frame below turn label
+        self.timer_label.place(relx=0.65, y=30, anchor="n")
 
         # Remove old small rules button if present
         if self.small_rules_button and self.small_rules_button.winfo_exists():
             self.small_rules_button.destroy()
 
-        self.master.update_idletasks()  # Update window size info
-
-        # Adjust window size to fit the grid nicely
-        grid_width = self.grid_frame.winfo_width()
-        window_width = grid_width + 70 # Add some padding for buttons
-        window_height = self.grid_size * 50 + 200 # 50px per cell + space for buttons
-        self.master.geometry(f"{window_width}x{window_height}")
-
         # Create and place a small "RULES" button above the grid for quick access
         self.small_rules_button = tk.Button(self.master, text="Rules",font=("arial",10), command=self.show_rules)
-        button_width_px = 105
-        button_x = (window_width - button_width_px) // 2
-        self.small_rules_button.place(relx=0.5, y=self.grid_frame.winfo_y() - 35, anchor="n")
+        self.small_rules_button.place(relx=0.5, rely=0.13, anchor="n")
 
         self.knight_placed = False
 
